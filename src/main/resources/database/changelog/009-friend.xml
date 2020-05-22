@@ -1,0 +1,52 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Sanjeev" id="001">
+        <createTable tableName="friend">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="requester_user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="friend_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_friend" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="friend_status" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uuid" type="binary(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="created_date" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_date" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_friend_to_user_1"
+                                 baseTableName="friend"
+                                 baseColumnNames="requester_user_id"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="fk_friend_to_user_2"
+                                 baseTableName="friend"
+                                 baseColumnNames="friend_id"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"/>
+
+        <addUniqueConstraint columnNames="requester_user_id, friend_id"
+                             constraintName="unique_friend"
+                             tableName="friend"/>
+    </changeSet>
+
+</databaseChangeLog>

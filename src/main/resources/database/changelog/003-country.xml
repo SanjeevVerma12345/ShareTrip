@@ -1,0 +1,42 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Sanjeev" id="001">
+        <createTable tableName="country">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="alpha_code_2" type="VARCHAR(2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="numeric_code" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="uuid" type="binary(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="created_date" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_date" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_user_details_to_country"
+                                 baseTableName="user_details"
+                                 baseColumnNames="country_id"
+                                 referencedTableName="country"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

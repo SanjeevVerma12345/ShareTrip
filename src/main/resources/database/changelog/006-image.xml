@@ -1,0 +1,46 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Sanjeev" id="001">
+        <createTable tableName="image">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="url" type="VARCHAR(2083)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uuid" type="binary(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="created_date" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_date" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_user_details_to_image"
+                                 baseTableName="user_details"
+                                 baseColumnNames="user_image"
+                                 referencedTableName="image"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="fk_trip_to_image"
+                                 baseTableName="trip"
+                                 baseColumnNames="trip_image"
+                                 referencedTableName="image"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="fk_country_to_image"
+                                 baseTableName="country"
+                                 baseColumnNames="image"
+                                 referencedTableName="image"
+                                 referencedColumnNames="id"/>
+
+    </changeSet>
+
+</databaseChangeLog>

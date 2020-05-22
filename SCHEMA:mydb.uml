@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.SCHEMA:mydb</OriginalElement>
+  <nodes>
+    <node x="504.3484848484848" y="567.0">f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.user</node>
+    <node x="257.0" y="995.0">f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.user_hobbies</node>
+    <node x="1439.8920454545455" y="0.0">f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.DATABASECHANGELOGLOCK</node>
+    <node x="210.0" y="567.0">f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.hobby</node>
+    <node x="438.1132575757575" y="212.0">f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.country</node>
+    <node x="1170.8920454545455" y="0.0">f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.DATABASECHANGELOG</node>
+    <node x="759.1420454545455" y="1349.0">f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.user_trips</node>
+    <node x="820.3920454545455" y="490.0">f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.address</node>
+    <node x="691.0965909090908" y="962.0">f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.experiences</node>
+    <node x="469.0965909090908" y="973.0">f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.buddy</node>
+    <node x="387.3632575757575" y="0.0">f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.image</node>
+    <node x="899.0965909090909" y="940.0">f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.trip</node>
+    <node x="307.30681818181813" y="1338.0">f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.trip_images</node>
+    <node x="46.0" y="896.0">f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.user_details</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.user_trips" target="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.trip">
+      <point x="47.0" y="-92.0" />
+      <point x="900.1420454545455" y="1318.0" />
+      <point x="1040.096590909091" y="1318.0" />
+      <point x="47.0" y="147.0" />
+    </edge>
+    <edge source="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.user_hobbies" target="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.user">
+      <point x="47.0" y="-92.0" />
+      <point x="398.0" y="856.0" />
+      <point x="536.3484848484848" y="856.0" />
+      <point x="-64.0" y="81.0" />
+    </edge>
+    <edge source="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.address" target="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.country">
+      <point x="0.0" y="-158.0" />
+      <point x="947.8920454545455" y="465.0" />
+      <point x="583.6132575757575" y="465.0" />
+      <point x="48.5" y="114.0" />
+    </edge>
+    <edge source="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.user_details" target="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.country">
+      <point x="0.0" y="-191.0" />
+      <point x="141.5" y="465.0" />
+      <point x="486.6132575757575" y="465.0" />
+      <point x="-48.5" y="114.0" />
+    </edge>
+    <edge source="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.trip" target="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.address">
+      <point x="0.0" y="-147.0" />
+      <point x="993.0965909090909" y="826.0" />
+      <point x="947.8920454545455" y="826.0" />
+      <point x="0.0" y="158.0" />
+    </edge>
+    <edge source="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.trip_images" target="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.trip">
+      <point x="62.66666666666666" y="-103.0" />
+      <point x="463.97348484848476" y="1308.0" />
+      <point x="946.0965909090909" y="1308.0" />
+      <point x="-47.0" y="147.0" />
+    </edge>
+    <edge source="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.trip" target="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.user">
+      <point x="-37.599999999999966" y="-147.0" />
+      <point x="955.4965909090909" y="836.0" />
+      <point x="685.681818181818" y="836.0" />
+      <point x="85.33333333333326" y="81.0" />
+    </edge>
+    <edge source="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.trip" target="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.image">
+      <point x="75.20000000000005" y="-147.0" />
+      <point x="1068.2965909090908" y="876.0" />
+      <point x="1085.8920454545455" y="876.0" />
+      <point x="1085.8920454545455" y="192.0" />
+      <point x="551.8632575757574" y="192.0" />
+      <point x="70.5" y="81.0" />
+    </edge>
+    <edge source="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.buddy" target="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.user">
+      <point x="-50.25" y="-114.0" />
+      <point x="519.3465909090908" y="876.0" />
+      <point x="579.0151515151515" y="876.0" />
+      <point x="-21.33333333333337" y="81.0" />
+    </edge>
+    <edge source="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.country" target="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.image">
+      <point x="0.0" y="-114.0" />
+      <point x="535.1132575757575" y="192.0" />
+      <point x="504.8632575757575" y="192.0" />
+      <point x="23.5" y="81.0" />
+    </edge>
+    <edge source="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.user_hobbies" target="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.hobby">
+      <point x="-47.0" y="-92.0" />
+      <point x="0.0" y="81.0" />
+    </edge>
+    <edge source="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.trip_images" target="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.user">
+      <point x="0.0" y="-103.0" />
+      <point x="401.30681818181813" y="1318.0" />
+      <point x="458.5965909090908" y="1318.0" />
+      <point x="458.5965909090908" y="866.0" />
+      <point x="557.6818181818182" y="866.0" />
+      <point x="-42.66666666666663" y="81.0" />
+    </edge>
+    <edge source="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.user_details" target="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.user">
+      <point x="63.66666666666663" y="-191.0" />
+      <point x="205.16666666666663" y="846.0" />
+      <point x="515.0151515151515" y="846.0" />
+      <point x="-85.33333333333331" y="81.0" />
+    </edge>
+    <edge source="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.experiences" target="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.user">
+      <point x="-47.0" y="-125.0" />
+      <point x="738.0965909090908" y="856.0" />
+      <point x="643.0151515151515" y="856.0" />
+      <point x="42.66666666666663" y="81.0" />
+    </edge>
+    <edge source="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.address" target="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.trip">
+      <point x="85.0" y="158.0" />
+      <point x="1032.8920454545455" y="876.0" />
+      <point x="1030.696590909091" y="876.0" />
+      <point x="37.60000000000002" y="-147.0" />
+    </edge>
+    <edge source="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.experiences" target="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.address">
+      <point x="47.0" y="-125.0" />
+      <point x="832.0965909090908" y="876.0" />
+      <point x="862.8920454545455" y="876.0" />
+      <point x="-85.0" y="158.0" />
+    </edge>
+    <edge source="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.user_trips" target="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.user">
+      <point x="-47.0" y="-92.0" />
+      <point x="806.1420454545455" y="1298.0" />
+      <point x="680.5965909090908" y="1298.0" />
+      <point x="680.5965909090908" y="866.0" />
+      <point x="621.6818181818182" y="866.0" />
+      <point x="21.33333333333337" y="81.0" />
+    </edge>
+    <edge source="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.user_details" target="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.image">
+      <point x="-63.66666666666663" y="-191.0" />
+      <point x="77.83333333333337" y="876.0" />
+      <point x="88.5" y="876.0" />
+      <point x="88.5" y="192.0" />
+      <point x="457.8632575757575" y="192.0" />
+      <point x="-23.5" y="81.0" />
+    </edge>
+    <edge source="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.trip_images" target="f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.image">
+      <point x="-62.66666666666666" y="-103.0" />
+      <point x="338.6401515151515" y="1318.0" />
+      <point x="35.5" y="1318.0" />
+      <point x="35.5" y="182.0" />
+      <point x="410.8632575757575" y="182.0" />
+      <point x="-70.5" y="81.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6292498768239781" x="946.694664826131" y="913.7641382232728" />
+  <SelectedNodes>
+    <node>f0aeed13-1d04-4f26-ad7b-b7c00809d6c7.TABLE:mydb.user_details</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Key columns</Category>
+    <Category>Columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+

@@ -1,0 +1,63 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Sanjeev" id="001">
+        <createTable tableName="user_details">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="first_name" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="last_name" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="age" type="INT(2)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="gender" type="VARCHAR(8)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="email_id" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="about_me" type="VARCHAR(500)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="locked" type="BOOLEAN" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="activated" type="BOOLEAN" defaultValue="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_image" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="country_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="uuid" type="binary(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="created_date" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_date" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_user_details_to_user"
+                                 baseTableName="user_details"
+                                 baseColumnNames="user_id"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

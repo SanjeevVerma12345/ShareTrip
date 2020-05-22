@@ -1,0 +1,24 @@
+package de.sharetrip.experiences.domain;
+
+import de.sharetrip.address.domain.Address;
+import de.sharetrip.trip.domain.Trip;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import javax.persistence.Entity;
+
+@Entity
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class ExperienceAddress extends Address {
+
+    @Override
+    public void setTrip(Trip trip) {
+        throw new UnsupportedOperationException("Experiences are independent of trips");
+    }
+
+    @Override
+    public Trip getTrip() {
+        return null;
+    }
+}

@@ -1,0 +1,64 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Sanjeev" id="001">
+        <createTable tableName="address">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="address_name_from" type="VARCHAR(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="latitude_from" type="Decimal(9,6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="longitude_from" type="Decimal(9,6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address_name_to" type="VARCHAR(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="latitude_to" type="Decimal(9,6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="longitude_to" type="Decimal(9,6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country_from" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country_to" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="trip_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uuid" type="binary(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="created_date" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_date" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_address_to_country_to"
+                                 baseTableName="address"
+                                 baseColumnNames="country_from"
+                                 referencedTableName="country"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="fk_address_to_country_from"
+                                 baseTableName="address"
+                                 baseColumnNames="country_to"
+                                 referencedTableName="country"
+                                 referencedColumnNames="id"/>
+
+    </changeSet>
+
+</databaseChangeLog>

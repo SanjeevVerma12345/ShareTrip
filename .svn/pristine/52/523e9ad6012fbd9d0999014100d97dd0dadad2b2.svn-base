@@ -1,0 +1,44 @@
+package de.sharetrip.experiences.domain;
+
+import de.sharetrip.core.domain.BaseDomain;
+import de.sharetrip.user.domain.User;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Lob;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import java.util.Date;
+
+@Data
+@Entity
+@Table(name = "experiences")
+@EqualsAndHashCode(callSuper = true)
+public class Experiences extends BaseDomain {
+
+    @Column(name = "date_from")
+    private Date dateFrom;
+
+    @Column(name = "date_to")
+    private Date dateTo;
+
+    @Lob
+    @Column(name = "details",
+            columnDefinition = "LONGTEXT")
+    private String details;
+
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    @MapsId
+    private ExperienceAddress experienceAddress;
+
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    @MapsId
+    private User user;
+}

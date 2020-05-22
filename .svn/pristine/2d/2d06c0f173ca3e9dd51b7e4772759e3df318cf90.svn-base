@@ -1,0 +1,55 @@
+package de.sharetrip.address.domain;
+
+import de.sharetrip.core.domain.BaseDomain;
+import de.sharetrip.country.domain.Country;
+import de.sharetrip.trip.domain.Trip;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import java.math.BigDecimal;
+
+@Entity
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Table(name = "address")
+public class Address extends BaseDomain {
+
+    @Column(name = "address_name_from")
+    private String fromAddressName;
+
+    @Column(name = "latitude_from")
+    private BigDecimal fromLatitude;
+
+    @Column(name = "longitude_from")
+    private BigDecimal fromLongitude;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "country_from")
+    private Country fromCountry;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "country_to")
+    private Country toCountry;
+
+    @Column(name = "address_name_to")
+    private String toAddressName;
+
+    @Column(name = "latitude_to")
+    private BigDecimal toLatitude;
+
+    @Column(name = "longitude_to")
+    private BigDecimal toLongitude;
+
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    @MapsId
+    private Trip trip;
+}
