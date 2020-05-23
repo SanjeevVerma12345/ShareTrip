@@ -34,9 +34,6 @@ public class UserDetails extends BaseDomain {
             length = 2)
     private Integer age;
 
-    @Column(name = "email_id")
-    private String emailId;
-
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     private User user;

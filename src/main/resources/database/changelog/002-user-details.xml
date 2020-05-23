@@ -21,9 +21,6 @@
             <column name="gender" type="VARCHAR(8)">
                 <constraints nullable="true"/>
             </column>
-            <column name="email_id" type="VARCHAR(255)">
-                <constraints nullable="true"/>
-            </column>
             <column name="about_me" type="VARCHAR(500)">
                 <constraints nullable="true"/>
             </column>

@@ -10,6 +10,8 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -30,6 +32,21 @@ public class User extends BaseDomain {
             updatable = false,
             unique = true)
     private String userName;
+
+    @Column(name = "email_id")
+    private String emailId;
+
+    //not sure if should be in
+    @Column(name = "password")
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "provider",
+            length = 10)
+    private AuthProvider provider;
+
+    @Column(name = "provider_id")
+    private String providerId;
 
     @OneToOne(mappedBy = "user",
             cascade = CascadeType.ALL,
