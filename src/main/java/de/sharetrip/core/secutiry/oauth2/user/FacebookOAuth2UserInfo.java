@@ -17,25 +17,25 @@ public class FacebookOAuth2UserInfo extends OAuth2UserInfo {
 
     @Override
     public String getId() {
-        return (String) attributes.get(ID);
+        return (String) super.getAttributes().get(ID);
     }
 
     @Override
     public String getName() {
-        return (String) attributes.get(NAME);
+        return (String) super.getAttributes().get(NAME);
     }
 
     @Override
     public String getEmail() {
-        return (String) attributes.get(EMAIL);
+        return (String) super.getAttributes().get(EMAIL);
     }
 
     @Override
     public String getImageUrl() {
 
-        if (attributes.containsKey(PICTURE)) {
+        if (super.getAttributes().containsKey(PICTURE)) {
 
-            final Map<String, Object> pictureObj = (Map<String, Object>) attributes.get(PICTURE);
+            final Map<String, Object> pictureObj = (Map<String, Object>) super.getAttributes().get(PICTURE);
             if (pictureObj.containsKey(DATA)) {
                 final Map<String, Object> dataObj = (Map<String, Object>) pictureObj.get(DATA);
                 if (dataObj.containsKey(URL)) {

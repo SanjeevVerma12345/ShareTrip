@@ -18,7 +18,7 @@ public class AppProperties {
 
     @Getter
     @Setter
-    public static class Auth {
+    public static final class Auth {
 
         private String tokenSecret;
 

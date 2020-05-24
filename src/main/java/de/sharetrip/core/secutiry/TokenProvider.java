@@ -10,7 +10,6 @@ import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +26,8 @@ public class TokenProvider {
         final UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 
         final Date now = new Date();
-        final String expiration = StringUtils.join(now.getTime(), appProperties.getAuth().getTokenExpirationMsec());
-        final Date expiryDate = new Date(expiration);
+        final long tokenExpiration = now.getTime() + appProperties.getAuth().getTokenExpirationMsec();
+        final Date expiryDate = new Date(tokenExpiration);
 
         return Jwts.builder()
                 .setSubject(Long.toString(userPrincipal.getId()))

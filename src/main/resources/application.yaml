@@ -25,25 +25,26 @@ spring:
     liquibase:
         change-log: classpath:database/liquibase.xml
         enabled: true
-        drop-first: false
+        drop-first: true
 
     security:
         oauth2:
             client:
                 registration:
-                    #                    google:
-                    #                        clientId: 5014057553-8gm9um6vnli3cle5rgigcdjpdrid14m9.apps.googleusercontent.com
-                    #                        clientSecret: tWZKVLxaD_ARWsriiiUFYoIk
-                    #                        redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
-                    #                        scope:
-                    #                            - email
-                    #                            - profile
+                    google:
+                        clientId: 5014057553-8gm9um6vnli3cle5rgigcdjpdrid14m9.apps.googleusercontent.com
+                        clientSecret: tWZKVLxaD_ARWsriiiUFYoIk
+                        redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+                        scope:
+                            - email
+                            - profile
                     facebook:
                         #                        clientId: 121189305185277
                         clientId: 334449210869347
                         #                        clientSecret: 42ffe5aa7379e8326387e0fe16f34132
                         clientSecret: ec2c4709499c696d61adc66826abb92b
-                        redirectUri: "{baseUrl}/oauth2/callback/{registrationId}" # Note that facebook now mandates the use of https redirect URIs, so make sure your app supports https in production
+                        # Note that facebook now mandates the use of https redirect URIs, so make sure your app supports https in production
+                        redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
                         scope:
                             - email
                             - public_profile

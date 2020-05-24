@@ -9,16 +9,17 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Base64;
-import java.util.Objects;
 import java.util.Optional;
 
 @UtilityClass
 public class CookieUtils {
 
-    public static Optional<Cookie> getCookie(final HttpServletRequest request, final String name) {
+    public static Optional<Cookie> getCookie(final HttpServletRequest request,
+                                             final String name) {
+
         final Cookie[] cookies = request.getCookies();
 
-        if (Objects.nonNull(cookies) && ArrayUtils.isNotEmpty(cookies)) {
+        if (ArrayUtils.isNotEmpty(cookies)) {
 
             for (final Cookie cookie : cookies) {
                 if (cookie.getName().equals(name)) {
@@ -46,7 +47,7 @@ public class CookieUtils {
                                     final String name) {
         final Cookie[] cookies = request.getCookies();
 
-        if (Objects.nonNull(cookies) && ArrayUtils.isNotEmpty(cookies)) {
+        if (ArrayUtils.isNotEmpty(cookies)) {
 
             for (final Cookie cookie : cookies) {
                 if (cookie.getName().equals(name)) {
@@ -67,6 +68,7 @@ public class CookieUtils {
     public static <T> T deserialize(final Cookie cookie,
                                     final Class<T> cls) {
         return cls.cast(SerializationUtils.deserialize(
-                Base64.getUrlDecoder().decode(cookie.getValue())));
+                Base64.getUrlDecoder()
+                        .decode(cookie.getValue())));
     }
 }

@@ -14,20 +14,21 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
+    //shame we are using real db here.
+    //should be cached
     private final UserRepository userRepository;
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(final String email)
             throws UsernameNotFoundException {
         final User user = userRepository.findByEmailId(email)
-                .orElseThrow(() ->
-                        new UsernameNotFoundException("User not found with email : " + email));
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("User not found with email [%s]", email)));
 
         return UserPrincipal.create(user);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public UserDetails loadUserById(final Long id) {
         final User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));

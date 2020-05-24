@@ -38,6 +38,7 @@ public class BaseDomain extends AbstractPersistable<Long> {
     @PrePersist
     protected void onCreate() {
         this.createdDate = new Date();
+        this.modifiedDate = new Date();
         this.uuid = UUID.randomUUID();
     }
 

@@ -13,14 +13,19 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+@Getter
 public class UserPrincipal implements OAuth2User, UserDetails {
 
-    @Getter
     private final Long id;
-    @Getter
+
     private final String email;
+
     private final String password;
+
+    private final String userName;
+
     private final Collection<? extends GrantedAuthority> authorities;
+
     @Setter
     private Map<String, Object> attributes;
 
@@ -30,31 +35,25 @@ public class UserPrincipal implements OAuth2User, UserDetails {
                          final Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.email = email;
+        this.userName = email;
         this.password = password;
         this.authorities = authorities;
     }
 
     public static UserPrincipal create(final User user) {
-        final List<GrantedAuthority> authorities = Collections.
-                singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+        final List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
 
         return new UserPrincipal(
                 user.getId(),
                 user.getEmailId(),
                 user.getPassword(),
-                authorities
-        );
+                authorities);
     }
 
     public static UserPrincipal create(final User user, final Map<String, Object> attributes) {
         final UserPrincipal userPrincipal = UserPrincipal.create(user);
         userPrincipal.setAttributes(attributes);
         return userPrincipal;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
     }
 
     @Override
@@ -83,17 +82,7 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
-
-    @Override
-    public Map<String, Object> getAttributes() {
-        return attributes;
-    }
-
-    @Override
     public String getName() {
-        return String.valueOf(id);
+        return email;
     }
 }

@@ -9,7 +9,7 @@ import java.util.Map;
 public abstract class OAuth2UserInfo {
 
     @Getter
-    protected Map<String, Object> attributes;
+    private final Map<String, Object> attributes;
 
     public abstract String getId();
 

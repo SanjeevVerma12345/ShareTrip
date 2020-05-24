@@ -24,7 +24,9 @@ public class ExperienceAddress extends BaseAddress {
     private Experience experience;
 
     @PrePersist
+    @Override
     protected void onCreate() {
+        super.onCreate();
         if (Objects.isNull(super.getType())) {
             super.setType(AddressType.EXPERIENCE);
         }

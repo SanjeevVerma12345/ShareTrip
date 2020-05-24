@@ -1,7 +1,8 @@
 package de.sharetrip.core.secutiry;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,13 +17,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j
+@Configuration
+@AllArgsConstructor
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private TokenProvider tokenProvider;
+    private final TokenProvider tokenProvider;
 
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+    private final CustomUserDetailsService customUserDetailsService;
 
     @Override
     protected void doFilterInternal(final HttpServletRequest request,
@@ -31,7 +32,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         try {
             final String jwt = getJwtFromRequest(request);
 
-            if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
+            if (StringUtils.hasText(jwt) &&
+                    tokenProvider.validateToken(jwt)) {
+                //Sanjeev here again
                 final Long userId = tokenProvider.getUserIdFromToken(jwt);
 
                 final UserDetails userDetails = customUserDetailsService.loadUserById(userId);
