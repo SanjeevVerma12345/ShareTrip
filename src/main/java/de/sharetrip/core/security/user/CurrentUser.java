@@ -1,4 +1,4 @@
-package de.sharetrip.core.secutiry;
+package de.sharetrip.core.security.user;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
@@ -8,8 +8,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.PARAMETER,
-        ElementType.TYPE})
+@Target({ElementType.PARAMETER, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @AuthenticationPrincipal
