@@ -1,8 +1,8 @@
 spring:
     datasource:
-        url: jdbc:mysql://localhost:3306/mydb?UseUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
-        username: root
-        password: root
+        url: jdbc:postgres://hxkgbiuxzafjde:d30a858550bd668c01ba37de813e07b6c2e19a524cbf1a64ff3b26025cf9bdcb@ec2-35-169-254-43.compute-1.amazonaws.com:5432/db4d2fk3gis56t
+        username: hxkgbiuxzafjde
+        password: d30a858550bd668c01ba37de813e07b6c2e19a524cbf1a64ff3b26025cf9bdcb
         testOnBorrow: true
         validationQuery: SELECT 1
         tomcat:
