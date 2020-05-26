@@ -12,13 +12,16 @@ spring:
         database: MYSQL
         hibernate:
             #            need sequencing here
-            ddl-auto: validate
+            ddl-auto: none
             naming:
                 physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
                 implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
             use-new-id-generator-mappings: false
         properties:
             hibernate:
+                jdbc:
+                    lob:
+                        non_contextual_creation: true
                 show_sql: true
                 format_sql: true
 
