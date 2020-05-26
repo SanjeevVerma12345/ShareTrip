@@ -24,7 +24,7 @@ spring:
 
     liquibase:
         change-log: classpath:database/liquibase.xml
-        enabled: false
+        enabled: true
         drop-first: false
 
 authentication:
