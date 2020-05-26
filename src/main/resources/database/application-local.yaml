@@ -1,0 +1,14 @@
+spring:
+    datasource:
+        url: jdbc:mysql://localhost:3306/mydb?UseUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+        username: root
+        password: root
+        testOnBorrow: true
+        validationQuery: SELECT 1
+        tomcat:
+            max-wait: 600000
+
+    liquibase:
+        change-log: classpath:database/liquibase.xml
+        enabled: false
+        drop-first: false
