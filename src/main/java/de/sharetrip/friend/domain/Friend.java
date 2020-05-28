@@ -26,7 +26,7 @@ public class Friend extends BaseDomain {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "friend_id")
-    private User friend;
+    private User buddy;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "friend_status",

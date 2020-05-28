@@ -7,7 +7,7 @@ import de.sharetrip.core.exception.UserNotAuthorizedException;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Objects;
+import java.util.Optional;
 
 @Slf4j
 @UtilityClass
@@ -17,33 +17,15 @@ public class FirebaseService {
                                                  final String emailId) throws UserNotAuthorizedException {
         final FirebaseToken firebaseToken;
         try {
-            firebaseToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
+            firebaseToken = FirebaseAuth
+                    .getInstance()
+                    .verifyIdToken(idToken);
         } catch (final FirebaseAuthException e) {
             log.error(String.format("Could not authenticate firebase id token for id [%s]", idToken), e);
             throw new UserNotAuthorizedException();
         }
-
-        Objects.requireNonNull(firebaseToken);
-
-        if (isFirebaseTokenValid(firebaseToken, emailId)) {
-            return firebaseToken;
-        }
-        throw new UserNotAuthorizedException();
+        return Optional.of(firebaseToken)
+                       .filter(token -> token.getEmail().equals(emailId))
+                       .orElseThrow(UserNotAuthorizedException::new);
     }
-
-    private static boolean isFirebaseTokenValid(final FirebaseToken firebaseToken,
-                                                final String emailId) {
-
-        if (!firebaseToken.getEmail().equals(emailId)) {
-            return false;
-        }
-
-        if (!firebaseToken.isEmailVerified()) {
-            return false;
-        }
-
-        return true;
-    }
-
-
 }

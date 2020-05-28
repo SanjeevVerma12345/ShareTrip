@@ -7,12 +7,16 @@ spring:
         validationQuery: SELECT 1
         tomcat:
             max-wait: 600000
+            initial-size: 5
+            max-active: 50
+            min-idle: 5
+
     jpa:
         show-sql: true
         database: MYSQL
         hibernate:
             #            need sequencing here
-            ddl-auto: none
+            ddl-auto: validate
             naming:
                 physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
                 implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
@@ -24,11 +28,21 @@ spring:
                         non_contextual_creation: true
                 show_sql: true
                 format_sql: true
+    redis:
+        host: SG-ShareTrip-34650.servers.mongodirector.com
+        password: DdmJHC1PI7vAXLKzeBVqs8D8cVZFaepz
+        port: 6379
+        jedis:
+            pool:
+                min-idle: 1
+                max-active: 10
+                max-idle: 1
 
     liquibase:
         change-log: classpath:database/liquibase.xml
         enabled: true
-        drop-first: false
+        drop-first: true
+
 
 authentication:
     firebase:
@@ -44,4 +58,3 @@ management:
         web:
             exposure:
                 include: health
-

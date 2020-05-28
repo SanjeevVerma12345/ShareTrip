@@ -18,9 +18,9 @@ import javax.persistence.Table;
 @Table(name = "message")
 public class Message extends BaseDomain {
 
-    @Column(name = "message",
+    @Column(name = "text",
             nullable = false)
-    private String message;
+    private String text;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_user")

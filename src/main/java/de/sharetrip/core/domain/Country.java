@@ -1,7 +1,5 @@
-package de.sharetrip.country.domain;
+package de.sharetrip.core.domain;
 
-import de.sharetrip.core.domain.BaseDomain;
-import de.sharetrip.core.domain.Image;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -28,7 +26,7 @@ public class Country extends BaseDomain {
     @Column(name = "numeric_code")
     private Integer numericCode;
 
-    @OneToOne(fetch = FetchType.LAZY,
+    @OneToOne(fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
     @JoinColumn(name = "image")
     private Image image;

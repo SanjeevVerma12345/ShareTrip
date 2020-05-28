@@ -1,8 +1,11 @@
 package de.sharetrip.core.security;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import de.sharetrip.core.exception.AccountLockedException;
 import de.sharetrip.core.exception.BadRequestException;
+import de.sharetrip.core.exception.UserNotAuthorizedException;
 import de.sharetrip.core.security.user.CustomUserDetails;
+import de.sharetrip.core.security.user.repository.CustomUserDetailsRepository;
 import de.sharetrip.core.util.RequestHeaderUtility;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,23 +26,32 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final TokenProvider tokenProvider;
 
+    private final CustomUserDetailsRepository customUserDetailsRepository;
+
     @Override
     protected void doFilterInternal(final HttpServletRequest request,
                                     final HttpServletResponse response,
                                     final FilterChain filterChain) throws IOException, ServletException {
 
         try {
-
             final String token = RequestHeaderUtility.getJwtFromRequest(request);
-            final String user = RequestHeaderUtility.getUserFromRequest(request);
-            final CustomUserDetails customUserDetails = new CustomUserDetails(user);
+            final String userName = RequestHeaderUtility.getUserFromRequest(request);
+            final CustomUserDetails customUserDetails = customUserDetailsRepository.getUserDetailsByUserName(userName);
 
-            tokenProvider.validate(token, customUserDetails);
-            assignUserToCurrentSession(customUserDetails);
+            final boolean isTokenValid = tokenProvider.validate(token, customUserDetails);
 
-        } catch (final BadRequestException | JWTVerificationException ex) {
-            log.debug("Could not verify request", ex);
+            if (isTokenValid) {
+                assignUserToCurrentSession(customUserDetails);
+            } else {
+                throw new UserNotAuthorizedException();
+            }
+        } catch (final BadRequestException | JWTVerificationException e) {
+            log.error("Could not verify request", e);
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        } catch (final UserNotAuthorizedException | AccountLockedException ex) {
+            log.error("User account is either locked or user not authorized", ex);
+            response.sendError(ex.getHttpStatus().value());
             return;
         }
 
@@ -48,7 +60,11 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private void assignUserToCurrentSession(final CustomUserDetails customUserDetails) {
 
-        final Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
+        final Authentication authentication = new UsernamePasswordAuthenticationToken(
+                customUserDetails,
+                customUserDetails.getPassword(),
+                customUserDetails.getAuthorities());
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 

@@ -7,8 +7,8 @@ services:
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: mydb
-            MYSQL_USER: root
-            MYSQL_PASSWORD: root
+            MYSQL_USER: sanjeev
+            MYSQL_PASSWORD: sanjeev
         volumes:
             - mysql-data:/var/lib/mysql
         ports:
@@ -16,8 +16,12 @@ services:
 
     redis:
         image: redis
+        command: redis-server --appendonly yes --requirepass redis
+        volumes:
+            - redis-data:/data
         ports:
             - 6379:6379
 
 volumes:
     mysql-data:
+    redis-data:

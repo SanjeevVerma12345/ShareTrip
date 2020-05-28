@@ -1,8 +1,9 @@
 package de.sharetrip.user.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import de.sharetrip.core.domain.BaseDomain;
+import de.sharetrip.core.domain.Country;
 import de.sharetrip.core.domain.Image;
-import de.sharetrip.country.domain.Country;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -34,31 +35,26 @@ public class UserDetails extends BaseDomain {
             length = 2)
     private Integer age;
 
-    @OneToOne(fetch = FetchType.LAZY)
     @MapsId
+    @JsonManagedReference
+    @OneToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @Column(name = "locked")
-    private boolean locked;
-
-    @Column(name = "activated")
-    private boolean activated;
-
-    @Enumerated(EnumType.STRING)
     @Column(length = 6)
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @OneToOne(fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
     @JoinColumn(name = "user_image")
+    @OneToOne(fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
     private Image userImage;
 
     @Column(name = "about_me",
             length = 500)
     private String aboutMe;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId
+    @ManyToOne(fetch = FetchType.EAGER)
     private Country country;
 
 }

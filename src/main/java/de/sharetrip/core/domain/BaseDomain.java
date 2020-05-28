@@ -12,13 +12,14 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
 @Data
 @MappedSuperclass
 @EqualsAndHashCode(callSuper = true)
-public class BaseDomain extends AbstractPersistable<Long> {
+public class BaseDomain extends AbstractPersistable<Long> implements Serializable {
 
     @Column(name = "uuid",
             updatable = false,

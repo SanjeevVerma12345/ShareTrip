@@ -1,17 +1,33 @@
 package de.sharetrip.core.security.user;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.UUID;
 
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
-    private final String emailId;
+    @Getter
+    private UUID uuid;
+
+    private String username;
+
+    private boolean accountNonLocked;
+
+    private boolean enabled;
+
+    @Getter
+    private String authenticationProvider;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -25,7 +41,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return emailId;
+        return this.username;
     }
 
     @Override
@@ -35,7 +51,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return this.accountNonLocked;
     }
 
     @Override
@@ -45,7 +61,6 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return this.enabled;
     }
-
 }

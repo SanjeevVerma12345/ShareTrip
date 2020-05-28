@@ -9,7 +9,7 @@
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="message" type="VARCHAR(255)">
+            <column name="text" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="sender_user" type="BIGINT">

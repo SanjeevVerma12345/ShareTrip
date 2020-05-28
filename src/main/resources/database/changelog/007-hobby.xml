@@ -9,7 +9,7 @@
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="hobby" type="VARCHAR(255)">
+            <column name="name" type="VARCHAR(255)">
                 <constraints nullable="false"
                              unique="true"
                              uniqueConstraintName="unique_hobby"/>

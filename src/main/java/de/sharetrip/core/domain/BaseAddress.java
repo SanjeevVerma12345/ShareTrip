@@ -1,6 +1,5 @@
 package de.sharetrip.core.domain;
 
-import de.sharetrip.country.domain.Country;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

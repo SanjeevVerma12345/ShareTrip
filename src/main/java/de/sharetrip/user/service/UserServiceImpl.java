@@ -1,20 +1,32 @@
 package de.sharetrip.user.service;
 
+import de.sharetrip.core.exception.AccountLockedException;
+import de.sharetrip.user.dataprovider.UserDataProvider;
 import de.sharetrip.user.domain.User;
-import de.sharetrip.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
+@Slf4j
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
+    private final UserDataProvider userDataProvider;
 
     @Override
-    public List<User> findAllUsers() {
-        return userRepository.findAll();
+    @Transactional(readOnly = true)
+    public User findUserByUserName(final String userName)
+            throws AccountLockedException {
+
+        final User user = userDataProvider.findUserByUserName(userName);
+
+        if (user.isAccountNonLocked()) {
+            return user;
+        } else {
+            log.error("User account with user name [%s] is locked.", user.getUsername());
+            throw new AccountLockedException();
+        }
     }
 }

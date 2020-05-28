@@ -14,7 +14,8 @@ import javax.persistence.Table;
 @EqualsAndHashCode(callSuper = true)
 public class Hobby extends BaseDomain {
 
-    @Column(name = "hobby",
-            unique = true)
-    private String hobby;
+    @Column(name = "name",
+            unique = true,
+            nullable = false)
+    private String name;
 }

@@ -24,12 +24,6 @@
             <column name="about_me" type="VARCHAR(500)">
                 <constraints nullable="true"/>
             </column>
-            <column name="locked" type="BOOLEAN" defaultValue="false">
-                <constraints nullable="false"/>
-            </column>
-            <column name="activated" type="BOOLEAN" defaultValue="true">
-                <constraints nullable="false"/>
-            </column>
             <column name="user_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>

@@ -1,5 +1,6 @@
 package de.sharetrip.user.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import de.sharetrip.core.domain.BaseDomain;
 import de.sharetrip.friend.domain.Friend;
 import de.sharetrip.hobby.domain.Hobby;
@@ -10,6 +11,8 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -25,19 +28,23 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class User extends BaseDomain {
 
-    @Column(name = "user_name",
-            nullable = false,
-            updatable = false,
-            unique = true)
-    private String userName;
+    @Column(name = "user_name")
+    private String username;
 
-    @Column(name = "email_id")
-    private String emailId;
-
-    //not sure if should be in
     @Column(name = "password")
     private String password;
 
+    @Column(name = "account_non_locked")
+    private boolean accountNonLocked;
+
+    @Column(name = "enabled")
+    private boolean enabled;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "authentication_provider", length = 10)
+    private AuthenticationProvider authenticationProvider;
+
+    @JsonBackReference
     @OneToOne(mappedBy = "user",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
@@ -60,5 +67,6 @@ public class User extends BaseDomain {
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "hobby_id")})
     private List<Hobby> hobbies;
+
 }
 

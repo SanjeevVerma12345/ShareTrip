@@ -2,9 +2,10 @@ package de.sharetrip.core.util;
 
 import de.sharetrip.core.exception.BadRequestException;
 import lombok.experimental.UtilityClass;
-import org.springframework.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 @UtilityClass
 public class RequestHeaderUtility {
@@ -17,23 +18,20 @@ public class RequestHeaderUtility {
 
         final String bearerToken = request.getHeader(HEADER_AUTHORIZATION);
 
-        if (StringUtils.hasText(bearerToken) &&
-                bearerToken.startsWith(BEARER_TYPE)) {
-            return bearerToken.substring(7);
-        }
-
-        throw new BadRequestException();
+        return Optional.of(bearerToken)
+                       .filter(StringUtils::isNotBlank)
+                       .filter(token -> token.startsWith(BEARER_TYPE))
+                       .map(token -> token.substring(7))
+                       .orElseThrow(BadRequestException::new);
     }
 
     public static String getUserFromRequest(final HttpServletRequest request) {
 
         final String bearerToken = request.getHeader(HEADER_USER);
 
-        if (StringUtils.isEmpty(bearerToken)) {
-            throw new BadRequestException();
-        }
-
-        return bearerToken;
+        return Optional.of(bearerToken)
+                       .filter(StringUtils::isNotBlank)
+                       .orElseThrow(BadRequestException::new);
     }
 
 }

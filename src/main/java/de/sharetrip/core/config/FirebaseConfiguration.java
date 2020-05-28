@@ -10,6 +10,7 @@ import org.springframework.core.io.ClassPathResource;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.io.InputStream;
 
 @Configuration
 @Slf4j
@@ -23,11 +24,18 @@ public class FirebaseConfiguration {
 
     @PostConstruct
     public void init() throws IOException {
+
         log.info("Initializing firebase.....");
-        final FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredentials(GoogleCredentials
-                        .fromStream(new ClassPathResource(configObject).getInputStream()))
-                .setDatabaseUrl(firebaseDatabaseUrl).build();
+
+        final InputStream inputStream = new ClassPathResource(configObject).getInputStream();
+        final GoogleCredentials googleCredentials = GoogleCredentials.fromStream(inputStream);
+
+        final FirebaseOptions options = new FirebaseOptions
+                .Builder()
+                .setCredentials(googleCredentials)
+                .setDatabaseUrl(firebaseDatabaseUrl)
+                .build();
+
         if (FirebaseApp.getApps().isEmpty()) {
             FirebaseApp.initializeApp(options);
         }
