@@ -1,11 +1,13 @@
 package de.sharetrip.oauth2.service;
 
+import de.sharetrip.core.exception.AccountLockedException;
 import de.sharetrip.core.exception.UserNotAuthorizedException;
 import de.sharetrip.core.security.TokenProvider;
 import de.sharetrip.core.security.user.CustomUserDetails;
 import de.sharetrip.oauth2.dto.AuthorizeDto;
 import de.sharetrip.oauth2.dto.OAuth2Response;
 import de.sharetrip.oauth2.utility.FirebaseService;
+import de.sharetrip.user.dataprovider.UserDataProvider;
 import de.sharetrip.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,14 +20,17 @@ public class OAuthService {
 
     private final TokenProvider tokenProvider;
 
-    public OAuth2Response prepareOAuthResponse(final User user,
-                                               final AuthorizeDto authorizeDto) throws UserNotAuthorizedException {
+    private final UserDataProvider userDataProvider;
+
+    public OAuth2Response prepareOAuthResponse(final AuthorizeDto authorizeDto)
+            throws UserNotAuthorizedException, AccountLockedException {
 
         final String emailId = authorizeDto.getEmailId();
         final String idToken = authorizeDto.getIdToken();
 
-        FirebaseService.getFirebaseToken(idToken, emailId);
+        FirebaseService.getVerifiedFirebaseToken(idToken, emailId);
 
+        final User user = userDataProvider.findUserByUserName(emailId);
         final String jsonWebToken = prepareJsonWebToken(user);
         final int tokenExpiration = tokenProvider.getTokenExpiration();
 

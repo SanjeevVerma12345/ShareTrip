@@ -12,8 +12,8 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStream;
 
-@Configuration
 @Slf4j
+@Configuration
 public class FirebaseConfiguration {
 
     @Value("${authentication.firebase.databaseUrl}")

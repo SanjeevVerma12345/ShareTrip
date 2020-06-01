@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import de.sharetrip.core.domain.BaseDomain;
 import de.sharetrip.core.domain.Country;
 import de.sharetrip.core.domain.Image;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -36,8 +38,10 @@ public class UserDetails extends BaseDomain {
     private Integer age;
 
     @MapsId
+    @ToString.Exclude
     @JsonManagedReference
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
     private User user;
 
     @Column(length = 6)
@@ -56,5 +60,14 @@ public class UserDetails extends BaseDomain {
     @MapsId
     @ManyToOne(fetch = FetchType.EAGER)
     private Country country;
+
+    @Builder
+    public UserDetails(final String firstName,
+                       final String lastName,
+                       final Image userImage) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userImage = userImage;
+    }
 
 }

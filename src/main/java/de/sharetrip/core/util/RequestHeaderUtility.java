@@ -18,7 +18,7 @@ public class RequestHeaderUtility {
 
         final String bearerToken = request.getHeader(HEADER_AUTHORIZATION);
 
-        return Optional.of(bearerToken)
+        return Optional.ofNullable(bearerToken)
                        .filter(StringUtils::isNotBlank)
                        .filter(token -> token.startsWith(BEARER_TYPE))
                        .map(token -> token.substring(7))
@@ -29,7 +29,7 @@ public class RequestHeaderUtility {
 
         final String bearerToken = request.getHeader(HEADER_USER);
 
-        return Optional.of(bearerToken)
+        return Optional.ofNullable(bearerToken)
                        .filter(StringUtils::isNotBlank)
                        .orElseThrow(BadRequestException::new);
     }

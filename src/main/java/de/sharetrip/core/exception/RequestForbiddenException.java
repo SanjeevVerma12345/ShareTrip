@@ -3,10 +3,10 @@ package de.sharetrip.core.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.BAD_REQUEST)
-public class ResourceNotFoundException extends RuntimeException {
+@ResponseStatus(HttpStatus.FORBIDDEN)
+public class RequestForbiddenException extends RuntimeException {
 
-    public ResourceNotFoundException(final String message) {
+    public RequestForbiddenException(final String message) {
         super(message);
     }
 }

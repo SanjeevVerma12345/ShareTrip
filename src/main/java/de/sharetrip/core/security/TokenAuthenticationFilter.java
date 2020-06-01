@@ -1,7 +1,6 @@
 package de.sharetrip.core.security;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import de.sharetrip.core.exception.AccountLockedException;
 import de.sharetrip.core.exception.BadRequestException;
 import de.sharetrip.core.exception.UserNotAuthorizedException;
 import de.sharetrip.core.security.user.CustomUserDetails;
@@ -38,19 +37,15 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             final String userName = RequestHeaderUtility.getUserFromRequest(request);
             final CustomUserDetails customUserDetails = customUserDetailsRepository.getUserDetailsByUserName(userName);
 
-            final boolean isTokenValid = tokenProvider.validate(token, customUserDetails);
+            tokenProvider.validate(token, customUserDetails);
+            assignUserToCurrentSession(customUserDetails);
 
-            if (isTokenValid) {
-                assignUserToCurrentSession(customUserDetails);
-            } else {
-                throw new UserNotAuthorizedException();
-            }
         } catch (final BadRequestException | JWTVerificationException e) {
             log.error("Could not verify request", e);
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             return;
-        } catch (final UserNotAuthorizedException | AccountLockedException ex) {
-            log.error("User account is either locked or user not authorized", ex);
+        } catch (final UserNotAuthorizedException ex) {
+            log.error("User account is not authorized", ex);
             response.sendError(ex.getHttpStatus().value());
             return;
         }

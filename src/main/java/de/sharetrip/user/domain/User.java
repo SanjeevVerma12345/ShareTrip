@@ -5,6 +5,7 @@ import de.sharetrip.core.domain.BaseDomain;
 import de.sharetrip.friend.domain.Friend;
 import de.sharetrip.hobby.domain.Hobby;
 import de.sharetrip.trip.domain.Trip;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -68,5 +69,16 @@ public class User extends BaseDomain {
             inverseJoinColumns = {@JoinColumn(name = "hobby_id")})
     private List<Hobby> hobbies;
 
+    @Builder
+    public User(final String username,
+                final boolean enabled,
+                final AuthenticationProvider authenticationProvider,
+                final UserDetails userDetails) {
+        this.username = username;
+        this.enabled = enabled;
+        this.authenticationProvider = authenticationProvider;
+        this.userDetails = userDetails;
+        this.userDetails.setUser(this);
+    }
 }
 

@@ -43,7 +43,10 @@ spring:
         enabled: true
         drop-first: true
 
-
+    security:
+        user:
+            name: admin
+            password: Passw0rd@123#
 authentication:
     firebase:
         databaseUrl: https://solo-890ee.firebaseio.com

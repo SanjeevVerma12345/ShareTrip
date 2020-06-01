@@ -1,5 +1,6 @@
 package de.sharetrip.core.domain;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -17,4 +18,8 @@ public class Image extends BaseDomain {
             nullable = false)
     private String url;
 
+    @Builder
+    public Image(final String url) {
+        this.url = url;
+    }
 }

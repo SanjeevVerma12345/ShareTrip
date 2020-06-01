@@ -2,8 +2,8 @@ package de.sharetrip.core.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import de.sharetrip.core.exception.UserNotAuthorizedException;
 import de.sharetrip.core.security.user.CustomUserDetails;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.util.Date;
 
-@Service
 @Slf4j
+@Service
 public class TokenProvider {
 
     @Value("${jwt.secret}")
@@ -44,23 +44,20 @@ public class TokenProvider {
                   .sign(algorithm);
     }
 
-    public boolean validate(final String token,
-                            final CustomUserDetails customUserDetails) {
-        try {
+    public void validate(final String token,
+                         final CustomUserDetails customUserDetails)
+            throws UserNotAuthorizedException {
 
-            final DecodedJWT decodedJWT = JWT.require(algorithm)
-                                             .build()
-                                             .verify(token);
-            return verifyToken(decodedJWT, customUserDetails);
-        } catch (final JWTVerificationException exception) {
-            log.error("Could not verify JWT [%s]", token);
-        }
-        return false;
+        final DecodedJWT decodedJWT = JWT.require(algorithm)
+                                         .build()
+                                         .verify(token);
+
+        verifyToken(decodedJWT, customUserDetails);
     }
 
-
-    private boolean verifyToken(final DecodedJWT decodedJWT,
-                                final CustomUserDetails customUserDetails) {
+    private void verifyToken(final DecodedJWT decodedJWT,
+                             final CustomUserDetails customUserDetails)
+            throws UserNotAuthorizedException {
 
         final boolean isSubjectEquals = customUserDetails
                 .getUsername()
@@ -70,6 +67,9 @@ public class TokenProvider {
                 .getUuid()
                 .toString().equals(decodedJWT.getId());
 
-        return isSubjectEquals && isUuidEquals;
+        if (!(isSubjectEquals && isUuidEquals)) {
+            throw new UserNotAuthorizedException();
+        }
     }
+
 }

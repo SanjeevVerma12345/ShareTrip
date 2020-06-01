@@ -2,7 +2,6 @@ package de.sharetrip.core.security.user.repository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import de.sharetrip.core.cache.CacheManager;
-import de.sharetrip.core.exception.AccountLockedException;
 import de.sharetrip.core.exception.UserNotAuthorizedException;
 import de.sharetrip.core.security.user.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,7 @@ public class CustomUserDetailsRepository {
     private final CacheManager<CustomUserDetails> cacheManager;
 
     public CustomUserDetails getUserDetailsByUserName(final String userName)
-            throws UserNotAuthorizedException, AccountLockedException {
+            throws UserNotAuthorizedException {
 
         try {
             final Optional<CustomUserDetails> optionalCustomUserDetails = cacheManager.getValueFromCache(
@@ -30,8 +29,7 @@ public class CustomUserDetailsRepository {
                     CustomUserDetails.class);
 
             return optionalCustomUserDetails
-                    .filter(CustomUserDetails::isAccountNonLocked)
-                    .orElseThrow(AccountLockedException::new);
+                    .orElseThrow(UserNotAuthorizedException::new);
 
         } catch (final JsonProcessingException e) {
             log.error("Could not get user details", e);

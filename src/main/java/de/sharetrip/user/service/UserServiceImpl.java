@@ -1,10 +1,19 @@
 package de.sharetrip.user.service;
 
+import de.sharetrip.core.domain.Image;
 import de.sharetrip.core.exception.AccountLockedException;
+import de.sharetrip.core.exception.RequestForbiddenException;
+import de.sharetrip.core.exception.ResourceAlreadyExistsException;
+import de.sharetrip.core.exception.ResourceNotFoundException;
+import de.sharetrip.oauth2.domain.FirebaseUser;
+import de.sharetrip.oauth2.utility.FirebaseService;
 import de.sharetrip.user.dataprovider.UserDataProvider;
+import de.sharetrip.user.domain.AuthenticationProvider;
 import de.sharetrip.user.domain.User;
+import de.sharetrip.user.domain.UserDetails;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,14 +28,69 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public User findUserByUserName(final String userName)
             throws AccountLockedException {
+        return userDataProvider.findUserByUserName(userName);
+    }
 
-        final User user = userDataProvider.findUserByUserName(userName);
+    @Override
+    @Transactional
+    public User createUserFromFirebaseIdToken(final String idToken)
+            throws AccountLockedException {
 
-        if (user.isAccountNonLocked()) {
-            return user;
+        final FirebaseUser firebaseUser = FirebaseService.resolveFirebaseToken(idToken);
+
+        validateFirebaseTokenForSignUp(firebaseUser);
+
+        final User user = prepareUser(firebaseUser);
+        return userDataProvider.saveUser(user);
+    }
+
+    private void validateFirebaseTokenForSignUp(final FirebaseUser firebaseUser) throws AccountLockedException {
+
+        final User user;
+        final String firebaseUserEmail = firebaseUser.getEmail();
+
+        try {
+            user = this.findUserByUserName(firebaseUserEmail);
+        } catch (final ResourceNotFoundException e) {
+            log.debug("User with user name [%s] does not exists.");
+            return;
+        }
+
+        final AuthenticationProvider userAuthenticationProvider = user.getAuthenticationProvider();
+
+        if (userAuthenticationProvider.equals(firebaseUser.getAuthenticationProvider())) {
+            final ResourceAlreadyExistsException e = new ResourceAlreadyExistsException(
+                    String.format("User with user name [%s] already exists", firebaseUserEmail));
+            log.error(e.getMessage(), e);
+            ExceptionUtils.wrapAndThrow(e);
         } else {
-            log.error("User account with user name [%s] is locked.", user.getUsername());
-            throw new AccountLockedException();
+            final RequestForbiddenException e = new RequestForbiddenException(
+                    String.format("Email id already registered using %s", userAuthenticationProvider.name().toLowerCase()));
+            log.error(e.getMessage(), e);
+            ExceptionUtils.wrapAndThrow(e);
         }
     }
+
+    private User prepareUser(final FirebaseUser firebaseUser) {
+
+        final UserDetails userDetails = prepareUserDetails(firebaseUser);
+
+        return User.builder()
+                   .username(firebaseUser.getEmail())
+                   .enabled(firebaseUser.isEmailVerified())
+                   .authenticationProvider(firebaseUser.getAuthenticationProvider())
+                   .userDetails(userDetails)
+                   .build();
+    }
+
+    private UserDetails prepareUserDetails(final FirebaseUser firebaseUser) {
+        return UserDetails.builder()
+                          .firstName(firebaseUser.getFirstName())
+                          .lastName(firebaseUser.getLastName())
+                          .userImage(Image.builder()
+                                          .url(firebaseUser.getPicture())
+                                          .build())
+                          .build();
+    }
+
 }
