@@ -8,28 +8,32 @@ import org.springframework.cache.Cache;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.Objects;
-import java.util.Optional;
 
 @Slf4j
-@Component("defaultCacheManager")
 @AllArgsConstructor
+@Component("defaultCacheManager")
 public class CacheManager<T> {
 
     private final ObjectMapper objectMapper;
 
     private final RedisCacheManager redisCacheManager;
 
-    public Optional<T> getValueFromCache(final String cacheName,
-                                         final String key,
-                                         final Class<T> destinationClass) throws JsonProcessingException {
+    @PostConstruct
+    public void init() {
+        redisCacheManager.setTransactionAware(true);
+    }
+    
+    public T getValueFromCache(final String cacheName,
+                               final String key,
+                               final Class<T> destinationClass) throws JsonProcessingException {
         final Cache.ValueWrapper valueWrapper = getValueByCacheNameAndKey(cacheName, key);
 
         Objects.requireNonNull(valueWrapper);
 
         final String valueAsString = objectMapper.writeValueAsString(valueWrapper.get());
-        final T value = objectMapper.readValue(valueAsString, destinationClass);
-        return Optional.of(value);
+        return objectMapper.readValue(valueAsString, destinationClass);
     }
 
     private Cache.ValueWrapper getValueByCacheNameAndKey(final String cacheName,

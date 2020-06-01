@@ -41,11 +41,11 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             assignUserToCurrentSession(customUserDetails);
 
         } catch (final BadRequestException | JWTVerificationException e) {
-            log.error("Could not verify request", e);
+            log.error(String.format("Could not verify request with url [%s]", request.getRequestURI()), e);
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         } catch (final UserNotAuthorizedException ex) {
-            log.error("User account is not authorized", ex);
+            log.error(String.format("User account is not authorized for url [%s]", request.getRequestURI()), ex);
             response.sendError(ex.getHttpStatus().value());
             return;
         }

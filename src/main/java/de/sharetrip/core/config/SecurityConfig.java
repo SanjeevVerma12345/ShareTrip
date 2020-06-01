@@ -55,6 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring()
            .antMatchers(HttpMethod.POST, "/oauth2/authorize")
            .antMatchers(HttpMethod.POST, "/api/user-management/user")
-           .antMatchers(HttpMethod.GET, "/actuator/health");
+           .antMatchers(HttpMethod.GET, "/actuator/health")
+           .antMatchers(HttpMethod.GET, "/")
+           .antMatchers(HttpMethod.GET, "/csrf");
     }
 }

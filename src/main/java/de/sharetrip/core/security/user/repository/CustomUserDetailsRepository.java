@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -23,14 +21,10 @@ public class CustomUserDetailsRepository {
             throws UserNotAuthorizedException {
 
         try {
-            final Optional<CustomUserDetails> optionalCustomUserDetails = cacheManager.getValueFromCache(
+            return cacheManager.getValueFromCache(
                     USER_CACHE_NAME,
                     userName,
                     CustomUserDetails.class);
-
-            return optionalCustomUserDetails
-                    .orElseThrow(UserNotAuthorizedException::new);
-
         } catch (final JsonProcessingException e) {
             log.error("Could not get user details", e);
             throw new UserNotAuthorizedException();
