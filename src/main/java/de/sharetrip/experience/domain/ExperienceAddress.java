@@ -13,8 +13,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import java.util.Objects;
 
-@Entity
 @Data
+@Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorValue("EXPERIENCE")
 public class ExperienceAddress extends BaseAddress {
@@ -23,8 +23,8 @@ public class ExperienceAddress extends BaseAddress {
             fetch = FetchType.LAZY)
     private Experience experience;
 
-    @PrePersist
     @Override
+    @PrePersist
     protected void onCreate() {
         super.onCreate();
         if (Objects.isNull(super.getType())) {

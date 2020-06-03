@@ -13,7 +13,6 @@ import de.sharetrip.user.domain.User;
 import de.sharetrip.user.domain.UserDetails;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +33,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User createUserFromFirebaseIdToken(final String idToken)
-            throws AccountLockedException {
+            throws AccountLockedException, ResourceAlreadyExistsException {
 
         final FirebaseUser firebaseUser = FirebaseService.resolveFirebaseToken(idToken);
 
@@ -44,7 +43,8 @@ public class UserServiceImpl implements UserService {
         return userDataProvider.saveUser(user);
     }
 
-    private void validateFirebaseTokenForSignUp(final FirebaseUser firebaseUser) throws AccountLockedException {
+    private void validateFirebaseTokenForSignUp(final FirebaseUser firebaseUser)
+            throws AccountLockedException, ResourceAlreadyExistsException {
 
         final User user;
         final String firebaseUserEmail = firebaseUser.getEmail();
@@ -61,13 +61,13 @@ public class UserServiceImpl implements UserService {
         if (userAuthenticationProvider.equals(firebaseUser.getAuthenticationProvider())) {
             final ResourceAlreadyExistsException e = new ResourceAlreadyExistsException(
                     String.format("User with user name [%s] already exists", firebaseUserEmail));
-            log.error(e.getMessage(), e);
-            ExceptionUtils.wrapAndThrow(e);
+            log.debug(e.getMessage(), e);
+            throw e;
         } else {
             final RequestForbiddenException e = new RequestForbiddenException(
                     String.format("Email id already registered using %s", userAuthenticationProvider.name().toLowerCase()));
             log.error(e.getMessage(), e);
-            ExceptionUtils.wrapAndThrow(e);
+            throw e;
         }
     }
 

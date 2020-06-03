@@ -25,8 +25,8 @@ public class TripAddress extends BaseAddress {
             mappedBy = "address")
     private Trip trip;
 
-    @PrePersist
     @Override
+    @PrePersist
     protected void onCreate() {
         super.onCreate();
         if (Objects.isNull(super.getType())) {

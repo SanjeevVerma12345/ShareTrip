@@ -20,7 +20,6 @@ public class FirebaseService {
 
         final FirebaseUser firebaseToken = FirebaseService.resolveFirebaseToken(idToken);
 
-        //TODO: what if firebase email is not verified ?
         return Optional.of(firebaseToken)
                        .filter(token -> token.getEmail().equals(emailId))
                        .orElseThrow(UserNotAuthorizedException::new);
@@ -34,7 +33,7 @@ public class FirebaseService {
 
             return new FirebaseUser(firebaseToken);
         } catch (final FirebaseAuthException e) {
-            log.error(String.format("Could not resolve firebase token", idToken), e);
+            log.error(String.format("Could not resolve firebase token [%s]", idToken), e);
             throw new BadRequestException();
         }
     }

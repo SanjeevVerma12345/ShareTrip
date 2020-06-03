@@ -28,8 +28,8 @@ public class TokenProvider {
     private Algorithm algorithm;
 
     @PostConstruct
-    public void init() {
-        this.algorithm = Algorithm.HMAC512(clientSecret);
+    private void init() {
+        algorithm = Algorithm.HMAC512(clientSecret);
     }
 
     public String createToken(final CustomUserDetails customUserDetails) {

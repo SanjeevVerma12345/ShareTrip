@@ -19,7 +19,7 @@ import javax.validation.Valid;
 public class OAuth2Controller {
 
     private final OAuthService oAuthService;
-    
+
     @PostMapping
     public OAuth2Response prepareAccessToken(@Valid @RequestBody final AuthorizeDto authorizeDto)
             throws UserNotAuthorizedException, AccountLockedException {

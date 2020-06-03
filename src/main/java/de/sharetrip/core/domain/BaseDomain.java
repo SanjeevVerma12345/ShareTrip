@@ -38,8 +38,9 @@ public class BaseDomain extends AbstractPersistable<Long> implements Serializabl
 
     @PrePersist
     protected void onCreate() {
-        this.createdDate = new Date();
-        this.modifiedDate = new Date();
+        final Date date = new Date();
+        this.createdDate = date;
+        this.modifiedDate = date;
         this.uuid = UUID.randomUUID();
     }
 

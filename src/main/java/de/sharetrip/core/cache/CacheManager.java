@@ -21,10 +21,10 @@ public class CacheManager<T> {
     private final RedisCacheManager redisCacheManager;
 
     @PostConstruct
-    public void init() {
+    private void init() {
         redisCacheManager.setTransactionAware(true);
     }
-    
+
     public T getValueFromCache(final String cacheName,
                                final String key,
                                final Class<T> destinationClass) throws JsonProcessingException {

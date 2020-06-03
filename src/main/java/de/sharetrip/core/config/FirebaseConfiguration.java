@@ -23,7 +23,7 @@ public class FirebaseConfiguration {
     private String configObject;
 
     @PostConstruct
-    public void init() throws IOException {
+    private void init() throws IOException {
 
         log.info("Initializing firebase.....");
 

@@ -47,6 +47,15 @@ spring:
         user:
             name: admin
             password: Passw0rd@123#
+#    activemq:
+#        broker-url: tcp://localhost:61616
+#        user: root
+#        #        password:
+#        pool:
+#            enabled: true
+#            max-connections: 5
+
+
 authentication:
     firebase:
         databaseUrl: https://solo-890ee.firebaseio.com
