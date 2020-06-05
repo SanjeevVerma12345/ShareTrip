@@ -5,10 +5,10 @@ import de.sharetrip.core.exception.AccountLockedException;
 import de.sharetrip.core.exception.RequestForbiddenException;
 import de.sharetrip.core.exception.ResourceAlreadyExistsException;
 import de.sharetrip.core.exception.ResourceNotFoundException;
-import de.sharetrip.oauth2.domain.FirebaseUser;
-import de.sharetrip.oauth2.utility.FirebaseService;
+import de.sharetrip.firebase.domain.AuthenticationProvider;
+import de.sharetrip.firebase.domain.FirebaseUser;
+import de.sharetrip.firebase.utility.FirebaseService;
 import de.sharetrip.user.dataprovider.UserDataProvider;
-import de.sharetrip.user.domain.AuthenticationProvider;
 import de.sharetrip.user.domain.User;
 import de.sharetrip.user.domain.UserDetails;
 import lombok.AllArgsConstructor;
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
         final String firebaseUserEmail = firebaseUser.getEmail();
 
         try {
-            user = this.findUserByUserName(firebaseUserEmail);
+            user = findUserByUserName(firebaseUserEmail);
         } catch (final ResourceNotFoundException e) {
             log.debug("User with user name [%s] does not exists.");
             return;

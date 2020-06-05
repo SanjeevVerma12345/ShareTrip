@@ -1,4 +1,4 @@
-package de.sharetrip.core.exception;
+package de.sharetrip.core.exception.handler;
 
 import lombok.Builder;
 import lombok.Value;

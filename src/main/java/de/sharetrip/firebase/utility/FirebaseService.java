@@ -1,11 +1,11 @@
-package de.sharetrip.oauth2.utility;
+package de.sharetrip.firebase.utility;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import de.sharetrip.core.exception.BadRequestException;
 import de.sharetrip.core.exception.UserNotAuthorizedException;
-import de.sharetrip.oauth2.domain.FirebaseUser;
+import de.sharetrip.firebase.domain.FirebaseUser;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 

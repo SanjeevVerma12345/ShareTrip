@@ -2,6 +2,7 @@ package de.sharetrip.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import de.sharetrip.core.domain.BaseDomain;
+import de.sharetrip.firebase.domain.AuthenticationProvider;
 import de.sharetrip.friend.domain.Friend;
 import de.sharetrip.hobby.domain.Hobby;
 import de.sharetrip.trip.domain.Trip;

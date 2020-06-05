@@ -2,6 +2,7 @@ package de.sharetrip.core.domain;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -17,6 +18,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Data
+@Slf4j
 @MappedSuperclass
 @EqualsAndHashCode(callSuper = true)
 public class BaseDomain extends AbstractPersistable<Long> implements Serializable {
@@ -39,14 +41,14 @@ public class BaseDomain extends AbstractPersistable<Long> implements Serializabl
     @PrePersist
     protected void onCreate() {
         final Date date = new Date();
-        this.createdDate = date;
-        this.modifiedDate = date;
-        this.uuid = UUID.randomUUID();
+        createdDate = date;
+        modifiedDate = date;
+        uuid = UUID.randomUUID();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.modifiedDate = new Date();
+        modifiedDate = new Date();
     }
 
 }

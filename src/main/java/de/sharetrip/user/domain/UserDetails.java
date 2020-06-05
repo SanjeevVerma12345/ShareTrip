@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import de.sharetrip.core.domain.BaseDomain;
 import de.sharetrip.core.domain.Country;
 import de.sharetrip.core.domain.Image;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.CascadeType;
@@ -23,6 +25,9 @@ import javax.persistence.Table;
 
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user_details")
 @EqualsAndHashCode(callSuper = true)
 public class UserDetails extends BaseDomain {
@@ -61,13 +66,5 @@ public class UserDetails extends BaseDomain {
     @ManyToOne(fetch = FetchType.EAGER)
     private Country country;
 
-    @Builder
-    public UserDetails(final String firstName,
-                       final String lastName,
-                       final Image userImage) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.userImage = userImage;
-    }
 
 }

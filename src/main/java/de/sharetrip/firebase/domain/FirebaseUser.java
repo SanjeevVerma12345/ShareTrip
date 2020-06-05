@@ -1,8 +1,7 @@
-package de.sharetrip.oauth2.domain;
+package de.sharetrip.firebase.domain;
 
 import com.google.api.client.util.ArrayMap;
 import com.google.firebase.auth.FirebaseToken;
-import de.sharetrip.user.domain.AuthenticationProvider;
 import lombok.Value;
 import org.apache.commons.lang3.StringUtils;
 
@@ -57,7 +56,7 @@ public final class FirebaseUser {
                              .get("firebase"))
                 .get("sign_in_provider")
                 .toString();
-        
+
         return AuthenticationProvider.findBySignInProvider(authenticationProvider);
     }
 }

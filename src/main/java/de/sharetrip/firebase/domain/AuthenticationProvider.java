@@ -1,4 +1,4 @@
-package de.sharetrip.user.domain;
+package de.sharetrip.firebase.domain;
 
 import lombok.AllArgsConstructor;
 

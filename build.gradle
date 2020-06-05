@@ -33,6 +33,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
+    compile group: 'org.springframework.retry', name: 'spring-retry', version: '1.3.0'
+
     implementation 'org.liquibase:liquibase-core'
 
     compileOnly 'org.projectlombok:lombok'

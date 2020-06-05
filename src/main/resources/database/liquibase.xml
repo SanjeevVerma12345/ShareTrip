@@ -20,5 +20,7 @@
     <include file="database/changelog/012-trip-images.xml"/>
     <include file="database/changelog/013-message.xml"/>
     <include file="database/changelog/014-experience-images.xml"/>
+    <include file="database/changelog/015-mail.xml"/>
+    <include file="database/changelog/016-notification.xml"/>
 
 </databaseChangeLog>

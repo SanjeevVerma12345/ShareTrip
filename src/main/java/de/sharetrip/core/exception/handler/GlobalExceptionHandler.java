@@ -1,4 +1,4 @@
-package de.sharetrip.core.exception;
+package de.sharetrip.core.exception.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         final ResponseStatus responseStatus = findMergedAnnotation(exception.getClass(), ResponseStatus.class);
         final ResponseError build = ResponseError
                 .builder()
-                .errorMessage(responseStatus.value().getReasonPhrase())
+                .errorMessage(exception.getMessage())
                 .errorStatus(responseStatus.value())
                 .build();
         return new ResponseEntity<>(build, build.getErrorStatus());
